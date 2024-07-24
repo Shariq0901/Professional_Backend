@@ -1,4 +1,4 @@
-import Products from "../modals/Products.js";
+import Products from "../models/Products.js";
 import ApiError from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";

@@ -3,7 +3,7 @@ import ApiError from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
-import User from "../modals/User.js";
+import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import formatDate from "../utils/formateDate.js";
 
