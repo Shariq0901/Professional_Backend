@@ -35,4 +35,12 @@ const registerValidation = [
     .withMessage("Password should be at least 8 characters long"),
 ];
 
-export {registerValidation,authJwt}
+const visitorValidation = [
+  body("phone")
+    .custom((value) => validatePhoneNumber(value))
+    .withMessage("Phone number should be in Indian format"),
+  body("email")
+    .custom((value) => validateEmail(value))
+    .withMessage("Invalid email format"),
+];
+export {registerValidation,authJwt,visitorValidation}
