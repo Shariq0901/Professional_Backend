@@ -24,4 +24,4 @@ const getMessages = asyncHandler(async (req, res) => {
   res.status(200).json(messages);
 });
 
-export { contact };
+export { contact,getMessages };

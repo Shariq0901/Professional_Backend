@@ -3,7 +3,6 @@ import ApiError from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import User from "../models/User.js";
 import Products from "../models/Products.js";
-import formatDate from "../utils/formateDate.js";
 
 //  Add to Wishlist
 const addtoUserWishlist = asyncHandler(async (req, res) => {
