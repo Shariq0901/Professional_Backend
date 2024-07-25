@@ -9,5 +9,7 @@ const ContactSchema = new Schema({
   message: {type: String,required: true},
   date: {type: Date,default: Date.now},
 });
+const Messages = mongoose.model("Contact", ContactSchema)
+ export default Messages
 
-module.exports = mongoose.model("Contact", ContactSchema);
+

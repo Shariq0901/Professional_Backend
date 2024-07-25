@@ -1,6 +1,7 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
+import  BuyingModule from "../models/BuyingShema.js"
 import User from "../models/User.js";
 import Products from "../models/Products.js";
 
@@ -90,7 +91,7 @@ const getCart = asyncHandler(async (req, res) => {
 
 const purchaseModule = asyncHandler(async (req, res) => {
   const { addressId } = req.body;
-  const { email } = req.user;
+  const { email,username } = req.user;
 
   // Validate request body
   if (!addressId) throw new ApiError(400, "Missing addressId");
@@ -141,7 +142,7 @@ const purchaseModule = asyncHandler(async (req, res) => {
     orderProducts.push({
       prod_name: foundProduct.prod_name,
       quantity: no_of_items,
-      option_id: options_id,
+      options_id: options_id,
       price: discountedPrice,
     });
   }
