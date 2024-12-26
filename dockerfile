@@ -10,17 +10,22 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy the dist folder (or the build folder) into the container
-COPY dist/ /app/dist/
+# Copy the application code (including dist or build folder) into the container
+# Make sure the dist folder is generated before this step in your build process
+COPY . .
+
+# Build the project (this step is required if you need to generate the dist folder)
+RUN npm run build
 
 # Expose the port your app will run on
 EXPOSE 8000
 
-# Set environment variables (this can also be done at runtime with -e flags)
+# Set environment variables (these can also be set at runtime using -e flags in the `docker run` command)
+# If you are using GitHub secrets, they will be passed during the GitHub Actions workflow.
 ENV PORT=8000
 ENV DB_URL=${DB_URL}
 ENV CROSS_ORIGIN=${CROSS_ORIGIN}
 ENV JWT_SECRET=${JWT_SECRET}
 
-# Command to run your app inside the container
+# Command to run your app inside the container (this assumes your built app is in dist/)
 CMD ["node", "dist/app.js"]
