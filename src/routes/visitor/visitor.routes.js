@@ -5,4 +5,4 @@ const router = Router();
 
 router.route("/contact").post(visitorValidation, contact);
 
-export default router;
+export  {router};

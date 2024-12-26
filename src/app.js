@@ -16,7 +16,7 @@ app.use(express.static("public"));
 //  import Routes
 import userRouter from "./routes/user/user.routes.js";
 import productRouter from "./routes/admin/product.routes.js";
-import visitorRouter from "./routes/visitor/visitor.routes.js";
+import {router as visitorRouter} from "./routes/visitor/visitor.routes.js";
 import adminRouter from "./routes/admin/admin.routes.js"
 
 // Routes Declaration

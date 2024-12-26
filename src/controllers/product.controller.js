@@ -1,7 +1,7 @@
 import Products from "../models/Products.js";
-import ApiError from "../utils/apiError.js";
+import {ApiError} from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
-import asyncHandler from "../utils/asyncHandler.js";
+import {asyncHandler} from "../utils/asyncHandler.js";
 const addProduct = asyncHandler(async (req, res) => {
   const { cat_name, subCategories } = req.body;
   let category = await Products.findOne({ cat_name });
