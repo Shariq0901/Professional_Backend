@@ -38,7 +38,7 @@ jobs:
       run: npm run build --if-present
 
     - name: Run Code
-      run: node src/app.js
+      run: node src/index.js
       env: 
         PORT: ${{ secrets.PORT }}
         DB_URL: ${{ secrets.db_url }}
