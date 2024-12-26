@@ -6,6 +6,7 @@ const Products = require("../models/Products.js");
 const { ApiError } = require("../utils/apiError.js");
 const { ApiResponse } = require("../utils/apiResponse.js");
 const { asyncHandler } = require("../utils/asyncHandler.js");
+require("regenerator-runtime/runtime");
 const addProduct = asyncHandler(async (req, res) => {
   const { cat_name, subCategories } = req.body;
   let category = await Products.findOne({ cat_name });

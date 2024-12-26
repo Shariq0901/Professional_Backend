@@ -2,7 +2,7 @@
 // import { body} from "express-validator";
 const jwt = require("jsonwebtoken");
 const { body } = require("express-validator");
-
+require("regenerator-runtime/runtime");
 const authJwt = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader)

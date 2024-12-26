@@ -10,6 +10,7 @@ const { asyncHandler } = require("../utils/asyncHandler.js");
 const { ApiError } = require("../utils/apiError.js");
 const { ApiResponse } = require("../utils/apiResponse.js");
 const { validationResult } = require("express-validator");
+require("regenerator-runtime/runtime");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
 const bcrypt = require("bcrypt");

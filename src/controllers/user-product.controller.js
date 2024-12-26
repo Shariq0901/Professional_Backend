@@ -8,6 +8,7 @@ const { asyncHandler } = require("../utils/asyncHandler.js");
 const { ApiError } = require("../utils/apiError.js");
 const { ApiResponse } = require("../utils/apiResponse.js");
 const BuyingModule = require("../models/BuyingShema.js");
+ require("regenerator-runtime/runtime");
 const User = require("../models/User.js");
 const Products = require("../models/Products.js");
 

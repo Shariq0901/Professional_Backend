@@ -2,6 +2,7 @@
 // import {data_base_name} from "../constants.js"
 const mongoose = require("mongoose");
 const { data_base_name } = require("../constants.js");
+require("regenerator-runtime/runtime");
 const connection= async () => {
     try {
         

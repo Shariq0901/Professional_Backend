@@ -6,6 +6,7 @@ const Contact = require("../models/ContactUs.js");
 const { ApiResponse } = require("../utils/apiResponse.js");
 const { ApiError } = require("../utils/apiError.js");
 const { asyncHandler } = require("../utils/asyncHandler.js");
+require("regenerator-runtime/runtime");
 // Contact Us Route
 const contact = asyncHandler(async (req, res) => {
   const { name, email, phone, message } = req.body;
