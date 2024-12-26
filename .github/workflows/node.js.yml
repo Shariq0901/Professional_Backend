@@ -42,6 +42,12 @@ jobs:
           echo "DB_URL=${{ secrets.db_url }}" >> $GITHUB_ENV
           echo "CROSS_ORIGIN=${{ secrets.Cross_origin }}" >> $GITHUB_ENV
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+    - name: Print environment variables
+      run: |
+        echo "PORT=${{ secrets.PORT }}"
+        echo "DB_URL=${{ secrets.DB_URL }}"
+        echo "CROSS_ORIGIN=${{ secrets.CROSS_ORIGIN }}"
+        echo "JWT_SECRET=${{ secrets.JWT_SECRET }}"
     - name: Run Code
       run: node src/index.js
       env: 
