@@ -28,4 +28,4 @@ ENV CROSS_ORIGIN=${CROSS_ORIGIN}
 ENV JWT_SECRET=${JWT_SECRET}
 
 # Command to run your app inside the container (this assumes your built app is in dist/)
-CMD ["node", "dist/app.js"]
+CMD ["node", "dist/index.js"]
