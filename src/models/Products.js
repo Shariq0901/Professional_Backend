@@ -1,7 +1,6 @@
 // const mongoose = require("mongoose");
 import mongoose from "mongoose";
   
-
   const optionsSchema = new mongoose.Schema({
     prod_quantity: { type: String, required: true },
     price: { type: Number, required: true },

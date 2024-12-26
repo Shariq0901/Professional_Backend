@@ -13,9 +13,9 @@ const registerUser = asyncHandler(async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const userExists = await User.findOne({ email, phone, name });
+  const userExists = await User.findOne({ email, phone});
   if (userExists)
-    throw new ApiError(400, "user with email or phone or name  exists");
+    throw new ApiError(400, "user with email or phone exists");
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = new User({
     name,

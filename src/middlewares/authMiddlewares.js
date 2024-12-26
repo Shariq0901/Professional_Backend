@@ -14,7 +14,7 @@ const authJwt = async (req, res, next) => {
   }
 };
 const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-const validatePhoneNumber = (phone) => /^[7-9]\d{9}$/.test(phone);
+const validatePhoneNumber = (phone) => /^[6-9]\d{9}$/.test(phone);
 const registerValidation = [
   body("name")
     .isLength({ min: 3 })

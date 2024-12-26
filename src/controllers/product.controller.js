@@ -2,7 +2,6 @@ import Products from "../models/Products.js";
 import ApiError from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
-
 const addProduct = asyncHandler(async (req, res) => {
   const { cat_name, subCategories } = req.body;
   let category = await Products.findOne({ cat_name });
@@ -11,14 +10,12 @@ const addProduct = asyncHandler(async (req, res) => {
       const existingSubCat = category.subCategories.find(
         (sc) => sc.subCat_name === subCat.subCat_name
       );
-
       if (existingSubCat) {
         // Subcategory exists, check for products
         subCat.products.forEach((newProduct) => {
           const existingProduct = existingSubCat.products.find(
             (prod) => prod.prod_name === newProduct.prod_name
           );
-
           if (existingProduct) {
             // Product exists, update product options
             existingProduct.options.push(...newProduct.options);
