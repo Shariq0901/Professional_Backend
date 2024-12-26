@@ -1,5 +1,5 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code, and run tests across different versions of Node.js
+# For more information, see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
 name: Node.js CI
 
@@ -22,20 +22,25 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - name: checkout code
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4  # Fixed indentation and syntax here
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+
     - name: Install dependencies
       run: npm install
-    - name: building code
-    - run: npm run build --if-present
-    - run: npm test
+
+    - name: Build code
+      run: npm run build --if-present
+
+    - name: Run tests
+      run: npm test
       env: 
-        PORT: 8000
-        db_url: "mongodb+srv://shaiksuraz50:RQjjtnvAycc1fKeH@cluster0.frnmcql.mongodb.net"
-        JWT_SECRET: "edad77087f2bb65e523e3acce393c4daf097a3488fdd1731ec8179f418750b860c01f051909061209f30fd0f532a97eafc4fb05a6b8d8557d73484910ffceb23"
-        
+        PORT: ${{ secrets.PORT }}
+        DB_URL: ${{ secrets.db_url }}
+        CROSS_ORIGIN: ${{ secrets.Cross_origin }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
