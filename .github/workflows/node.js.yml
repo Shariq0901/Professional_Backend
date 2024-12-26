@@ -53,4 +53,12 @@ jobs:
     - name: Push Docker image
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/nodejs-envanto:latest
+    - name: Runing Docker image
+      run: |
+          docker run -d -p 8000:8000 \
+            -e PORT=${{ secrets.PORT }} \
+            -e DB_URL=${{ secrets.DB_URL }} \
+            -e CROSS_ORIGIN=${{ secrets.CROSS_ORIGIN }} \
+            -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            ${{ secrets.DOCKER_USERNAME }}/nodejs-envanto:latest
 
