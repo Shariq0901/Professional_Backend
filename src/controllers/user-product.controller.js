@@ -1,9 +1,15 @@
-import {asyncHandler} from "../utils/asyncHandler.js";
-import {ApiError} from "../utils/apiError.js";
-import { ApiResponse } from "../utils/apiResponse.js";
-import  BuyingModule from "../models/BuyingShema.js"
-import User from "../models/User.js";
-import Products from "../models/Products.js";
+// import {asyncHandler} from "../utils/asyncHandler.js";
+// import {ApiError} from "../utils/apiError.js";
+// import { ApiResponse } from "../utils/apiResponse.js";
+// import  BuyingModule from "../models/BuyingShema.js"
+// import User from "../models/User.js";
+// import Products from "../models/Products.js";
+const { asyncHandler } = require("../utils/asyncHandler.js");
+const { ApiError } = require("../utils/apiError.js");
+const { ApiResponse } = require("../utils/apiResponse.js");
+const BuyingModule = require("../models/BuyingShema.js");
+const User = require("../models/User.js");
+const Products = require("../models/Products.js");
 
 //  Add to Wishlist
 const addtoUserWishlist = asyncHandler(async (req, res) => {
@@ -170,7 +176,7 @@ const purchaseModule = asyncHandler(async (req, res) => {
   await user.save();
   return res.status(200).json(new ApiResponse(200, "Purchase successful"));
 });
-export {
+module.exports ={
   addtoUserWishlist,
   removefromUserWishlist,
   getWishlist,

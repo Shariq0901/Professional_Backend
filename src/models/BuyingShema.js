@@ -1,5 +1,5 @@
-// const mongoose = require("mongoose");
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+// import mongoose from "mongoose";
 const orderSchema = new mongoose.Schema({
   products: [
     {
@@ -18,4 +18,4 @@ const buyingSchema = new mongoose.Schema({
   orders: [orderSchema],
 });
 const BuyingModule = mongoose.model("BuyingModule", buyingSchema);
-export default BuyingModule;
+module.exports = BuyingModule;

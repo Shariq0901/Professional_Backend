@@ -1,5 +1,8 @@
-import jwt from "jsonwebtoken";
-import { body} from "express-validator";
+// import jwt from "jsonwebtoken";
+// import { body} from "express-validator";
+const jwt = require("jsonwebtoken");
+const { body } = require("express-validator");
+
 const authJwt = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader)
@@ -43,4 +46,4 @@ const visitorValidation = [
     .custom((value) => validateEmail(value))
     .withMessage("Invalid email format"),
 ];
-export {registerValidation,authJwt,visitorValidation}
+module.exports= {registerValidation,authJwt,visitorValidation}

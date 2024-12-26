@@ -13,4 +13,4 @@ const formatDate = (date) => {
   const formattedHours = String(hours).padStart(2, "0");
   return `${day}/${month}/${year} ${formattedHours}:${minutes}:${seconds} ${ampm}`;
 };
-export  {formatDate};
+module.exports=  {formatDate};

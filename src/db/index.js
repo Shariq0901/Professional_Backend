@@ -1,5 +1,7 @@
-import mongoose from "mongoose"
-import {data_base_name} from "../constants.js"
+// import mongoose from "mongoose"
+// import {data_base_name} from "../constants.js"
+const mongoose = require("mongoose");
+const { data_base_name } = require("../constants.js");
 const connection= async () => {
     try {
         
@@ -12,4 +14,4 @@ const connection= async () => {
         process.exit(1)
     }
 }
-export default connection
+module.exports = connection;

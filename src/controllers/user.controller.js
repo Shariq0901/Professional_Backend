@@ -1,11 +1,20 @@
-import {asyncHandler} from "../utils/asyncHandler.js";
-import {ApiError} from "../utils/apiError.js";
-import { ApiResponse } from "../utils/apiResponse.js";
-import { validationResult } from "express-validator";
-import jwt from "jsonwebtoken";
-import User from "../models/User.js";
-import bcrypt from "bcrypt";
-import {formatDate} from "../utils/formateDate.js";
+// import {asyncHandler} from "../utils/asyncHandler.js";
+// import {ApiError} from "../utils/apiError.js";
+// import { ApiResponse } from "../utils/apiResponse.js";
+// import { validationResult } from "express-validator";
+// import jwt from "jsonwebtoken";
+// import User from "../models/User.js";
+// import bcrypt from "bcrypt";
+// import {formatDate} from "../utils/formateDate.js";
+const { asyncHandler } = require("../utils/asyncHandler.js");
+const { ApiError } = require("../utils/apiError.js");
+const { ApiResponse } = require("../utils/apiResponse.js");
+const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
+const User = require("../models/User.js");
+const bcrypt = require("bcrypt");
+const { formatDate } = require("../utils/formateDate.js");
+
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, username, phone, email, password, userType } = req.body;
@@ -107,4 +116,4 @@ const addUserAddress = asyncHandler(async (req, res) => {
 //     res.status(500).json({ message: error.message });
 //   }
 // });
-export { registerUser, loginUser, logoutUser,addUserAddress };
+module.exports= { registerUser, loginUser, logoutUser,addUserAddress };

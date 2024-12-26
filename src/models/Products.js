@@ -1,5 +1,5 @@
-// const mongoose = require("mongoose");
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+// import mongoose from "mongoose";
   
   const optionsSchema = new mongoose.Schema({
     prod_quantity: { type: String, required: true },
@@ -29,4 +29,4 @@ import mongoose from "mongoose";
   });
 
   const Products = mongoose.model("Category", categorySchema);
-  export default Products 
+  module.exports = Products 

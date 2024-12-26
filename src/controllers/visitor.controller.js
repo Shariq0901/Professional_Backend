@@ -1,8 +1,11 @@
-import Contact from "../models/ContactUs.js";
-import { ApiResponse } from "../utils/apiResponse.js";
-import {ApiError} from "../utils/apiError.js";
-import {asyncHandler} from "../utils/asyncHandler.js";
-
+// import Contact from "../models/ContactUs.js";
+// import { ApiResponse } from "../utils/apiResponse.js";
+// import {ApiError} from "../utils/apiError.js";
+// import {asyncHandler} from "../utils/asyncHandler.js";
+const Contact = require("../models/ContactUs.js");
+const { ApiResponse } = require("../utils/apiResponse.js");
+const { ApiError } = require("../utils/apiError.js");
+const { asyncHandler } = require("../utils/asyncHandler.js");
 // Contact Us Route
 const contact = asyncHandler(async (req, res) => {
   const { name, email, phone, message } = req.body;
@@ -24,4 +27,4 @@ const getMessages = asyncHandler(async (req, res) => {
   res.status(200).json(messages);
 });
 
-export { contact,getMessages };
+module.exports= { contact,getMessages };

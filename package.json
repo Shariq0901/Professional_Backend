@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "nodemon src/index.js",
     "build": "npm run clean && npm run transpile",
-  "clean": "rimraf dist",  
-  "transpile": "babel src --out-dir dist --copy-files" 
+    "clean": "rimraf dist",
+    "transpile": "babel src --out-dir dist --copy-files"
   },
   "keywords": [],
   "author": "",

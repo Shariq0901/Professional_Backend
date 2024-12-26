@@ -1,6 +1,10 @@
-import dotenv from "dotenv";
-import connection from "./db/index.js";
-import { app } from "./app.js";
+// import dotenv from "dotenv";
+// import connection from "./db/index.js";
+// import { app } from "./app.js";
+const dotenv = require("dotenv");
+const connection = require("./db/index.js");
+const { app } = require("./app.js");
+
 dotenv.config({
   path: "./.env",
 });
