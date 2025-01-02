@@ -8,6 +8,8 @@ const { app } = require("./app.js");
 dotenv.config({
   path: "./.env",
 });
+console.log("hello commit")
+
 connection()
   .then(() => {
     app.listen(process.env.PORT || 8000, () => {
