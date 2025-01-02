@@ -4,9 +4,13 @@
 const { Router } = require("express");
 const { addProduct } = require("../../controllers/product.controller.js");
 const { getMessages } = require("../../controllers/visitor.controller.js");
+const metricsCollection=require("../../controllers/metrics.js")
+
 
 const router = Router();
 router.route("/add-Product").post(addProduct);
-router.route("/messages").get(getMessages)
+router.route("/messages").get(getMessages);
+router.route("/metrics").get(metricsCollection);
+
 
 module.exports=  router ;

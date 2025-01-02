@@ -4,7 +4,7 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-
+const client = require("prom-client") // for metric collection
 const app = express();
 app.use(express.json({ limit: "16kb" }));
 app.use(
@@ -13,6 +13,8 @@ app.use(
     credentials: true,
   })
 );
+const collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics({ register: client.register });
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: "true", limit: "16kb" }));
 app.use(express.static("public"));
@@ -33,6 +35,5 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/visitor", visitorRouter);
 app.use("/api/v1/admin", adminRouter);
-
 
 module.exports= { app };
