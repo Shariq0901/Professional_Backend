@@ -1,245 +1,222 @@
-# Node.js Server Project with Monitoring and Logging
+# Node.js Server Project with CI/CD and DevOps Monitoring Setup
 
-This README provides a comprehensive guide to set up a Node.js server project integrated with Prometheus and Grafana for monitoring, Loki for logging, and Docker for containerization. Follow the steps below to configure and deploy the project successfully.
-
----
-
-## Table of Contents
-
-1. [Project Setup](#project-setup)
-2. [Dependencies Installation](#dependencies-installation)
-3. [Metrics Collection Route](#metrics-collection-route)
-4. [Logging Integration](#logging-integration)
-5. [Environment Variables](#environment-variables)
-6. [Docker Integration](#docker-integration)
-7. [GitHub Actions CI/CD](#github-actions-cicd)
-8. [EC2 Instance Configuration](#ec2-instance-configuration)
-9. [Prometheus Setup](#prometheus-setup)
-10. [Grafana and Loki Setup](#grafana-and-loki-setup)
-11. [Visualization and Monitoring](#visualization-and-monitoring)
+This project provides a comprehensive setup for a Node.js server integrated with CI/CD pipelines, logging, and monitoring using Prometheus, Grafana, and Loki. **Note:** This setup is specifically designed for CI/CD and DevOps purposes.
 
 ---
 
-## Project Setup
+## Prerequisites
 
-1. **Initialize the Project**:
-    ```bash
-    mkdir node-server-project
-    cd node-server-project
-    npm init -y
-    ```
-
-2. **Configure Sensitive Information**:
-   Store sensitive information like MongoDB URL, port number, and credentials in a `.env` file.
+- Node.js (v20 or later)
+- Docker installed on your machine
+- AWS account for EC2 setup
+- GitHub repository with necessary secrets configured
 
 ---
 
-## Dependencies Installation
+## Steps
 
-Install the required dependencies:
-```bash
-npm install winston winston-loki prom-client dotenv express
-```
+### Step 1: Initialize the Node.js Project
 
----
-
-## Metrics Collection Route
-
-Add a route to collect metrics from Prometheus:
-
-```javascript
-const express = require('express');
-const client = require('prom-client');
-const collectDefaultMetrics = client.collectDefaultMetrics;
-collectDefaultMetrics({ register: client.register });
-
-const app = express();
-
-app.get('/metrics', async (req, res) => {
-  res.setHeader('Content-Type', client.register.contentType);
-  const metrics = await client.register.metrics();
-  return res.send(metrics);
-});
-```
+- Create a Node.js project and initialize `package.json`:
+  ```bash
+  npm init -y
+  ```
+- Install the required dependencies:
+  ```bash
+  npm install winston winston-loki prom-client express dotenv
+  ```
 
 ---
 
-## Logging Integration
+### Step 2: Sensitive Information Management
 
-Integrate Winston and Loki for logging:
-
-```javascript
-const { createLogger, transports, format } = require('winston');
-const LokiTransport = require('winston-loki');
-require('dotenv').config();
-
-const logger = createLogger({
-  level: 'info',
-  format: format.combine(format.timestamp(), format.simple()),
-  transports: [
-    new LokiTransport({
-      host: `${process.env.LOKI_HOST}`,
-      labels: { job: 'my-server' },
-    }),
-    new transports.Console({
-      format: format.combine(format.colorize(), format.simple()),
-    }),
-  ],
-});
-
-logger.info('Server is started');
-```
-
-Use `logger.info()` at the top of each route:
-
-```javascript
-logger.info('Request received on /api/v1/user/address');
-```
+- Use a `.env` file to manage sensitive information like MongoDB URL, port numbers, and credentials.
+- Example `.env` file:
+  ```
+  PORT=8000
+  DB_URL=your_mongodb_url
+  JWT_SECRET=your_secret
+  LOKI_HOST=http://<your_system_IP>:3100
+  ```
 
 ---
 
-## Environment Variables
+### Step 3: Adding Monitoring with Prometheus
 
-Create a `.env` file:
+- Install the Prometheus client in your Node.js project:
+  ```bash
+  npm install prom-client
+  ```
+- Add a route for Prometheus metrics collection:
+  ```javascript
+  const express = require('express');
+  const client = require('prom-client');
 
-```plaintext
-PORT=8000
-DB_URL=<your_mongo_db_url>
-LOKI_HOST=http://<your_system_ip>:3100
-```
+  const collectDefaultMetrics = client.collectDefaultMetrics;
+  collectDefaultMetrics({ register: client.register });
 
----
+  const app = express();
 
-## Docker Integration
-
-Add a `Dockerfile`:
-
-```dockerfile
-FROM node:20
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-EXPOSE 8000
-ENV PORT=8000
-ENV DB_URL=${DB_URL}
-ENV LOKI_HOST=${LOKI_HOST}
-CMD ["node", "index.js"]
-```
+  app.get('/metrics', async (req, res) => {
+    res.setHeader('Content-Type', client.register.contentType);
+    const metrics = await client.register.metrics();
+    return res.send(metrics);
+  });
+  ```
 
 ---
 
-## GitHub Actions CI/CD
+### Step 4: Adding Logging with Loki
 
-Set up a GitHub Actions workflow:
+- Configure Winston with Loki for log management:
+  ```javascript
+  const { createLogger, transports, format } = require('winston');
+  const LokiTransport = require('winston-loki');
 
-```yaml
-name: Node.js CI
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-      - name: Install dependencies
-        run: npm install
-      - name: Build project
-        run: npm run build --if-present
-      - name: Docker Login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build and Push Docker Image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/nodejs-envanto:latest .
-          docker push ${{ secrets.DOCKER_USERNAME }}/nodejs-envanto:latest
-```
+  require('dotenv').config();
+
+  const options = {
+    level: 'info',
+    format: format.combine(format.timestamp(), format.simple()),
+    transports: [
+      new LokiTransport({
+        host: process.env.LOKI_HOST,
+        labels: { job: 'my-server' },
+      }),
+      new transports.Console({
+        format: format.combine(format.colorize(), format.simple()),
+      }),
+    ],
+  };
+
+  const logger = createLogger(options);
+  logger.info('Server started');
+  ```
+
+- Add `logger.info` to every route for better log tracking:
+  ```javascript
+  logger.info('Request received on /api/v1/user/address');
+  ```
 
 ---
 
-## EC2 Instance Configuration
+### Step 5: Docker Setup
 
-1. **Create an EC2 Instance**:
-    - OS: Ubuntu
-    - Instance Type: t2.micro (Free Tier eligible)
-    - Enable HTTP and HTTPS traffic.
+- Create a `Dockerfile` for containerization:
+  ```dockerfile
+  FROM node:20
+  WORKDIR /app
+  COPY package*.json ./
+  RUN npm install
+  COPY . .
+  RUN npm run build
+  EXPOSE 8000
+  ENV PORT=8000
+  ENV DB_URL=${DB_URL}
+  ENV CROSS_ORIGIN=${CROSS_ORIGIN}
+  ENV JWT_SECRET=${JWT_SECRET}
+  ENV LOKI_HOST=${LOKI_HOST}
+  CMD ["node", "dist/index.js"]
+  ```
 
-2. **Install Docker on EC2**:
-    ```bash
-    sudo apt-get update
-    sudo apt-get install docker.io
-    sudo systemctl start docker
-    sudo chmod 666 /var/run/docker.sock
-    docker ps
-    ```
-
----
-
-## Prometheus Setup
-
-1. Download and Extract Prometheus:
-    ```bash
-    wget https://github.com/prometheus/prometheus/releases/download/v2.53.3/prometheus-2.53.3.linux-amd64.tar.gz
-    tar -xvzf prometheus-2.53.3.linux-amd64.tar.gz
-    cd prometheus-2.53.3.linux-amd64
-    ```
-
-2. Edit `prometheus.yml`:
-
-    ```yaml
-    scrape_configs:
-      - job_name: 'nodejs-app'
-        static_configs:
-          - targets: ['<ec2_ip>:8000']
-        metrics_path: '/metrics'
-    ```
+- Build and run the Docker container:
+  ```bash
+  docker build -t nodejs-envanto .
+  docker run -p 8000:8000 nodejs-envanto
+  ```
 
 ---
 
-## Grafana and Loki Setup
+### Step 6: GitHub Actions Workflow
 
-1. **Run Grafana and Loki using Docker**:
-    ```bash
-    docker run -d -p 3000:3000 --name=grafana grafana/grafana-oss
-    docker run -d -p 3100:3100 --name=loki grafana/loki
-    ```
+- Add a CI/CD workflow file in `.github/workflows/<filename>.yaml`:
+  ```yaml
+  name: Node.js CI
 
-2. Access Grafana at: `http://<ec2_ip>:3000` (Default credentials: admin/admin).
+  on:
+    push:
+      branches:
+        - main
+    pull_request:
+      branches:
+        - main
+
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v4
+          with:
+            node-version: '20.x'
+        - name: Install dependencies
+          run: npm install
+        - name: Build code
+          run: npm run build --if-present
+  ```
 
 ---
 
-## Visualization and Monitoring
+### Step 7: EC2 Instance Setup
 
-1. **Prometheus**:
-    - Navigate to `http://<ec2_ip>:9090`
-    - Verify metrics under **Status > Targets**.
-
-2. **Grafana**:
-    - Add Prometheus as a data source.
-    - Create a new dashboard and visualize metrics.
+- Launch an Ubuntu EC2 instance.
+- Configure security group to allow HTTP, HTTPS, and custom TCP ports for Prometheus (9090), Grafana (3000), and Loki (3100).
 
 ---
 
-## Images Placeholder
+### Step 8: Prometheus Setup
 
-- Add relevant screenshots or diagrams to illustrate steps here.
-  - ![Prometheus Targets](path/to/prometheus-targets.png)
-  - ![Grafana Dashboard](path/to/grafana-dashboard.png)
+- Download and configure Prometheus:
+  ```bash
+  wget https://github.com/prometheus/prometheus/releases/download/v2.53.3/prometheus-2.53.3.linux-amd64.tar.gz
+  tar -xvzf prometheus-2.53.3.linux-amd64.tar.gz
+  cd prometheus-2.53.3.linux-amd64
+  ```
+
+- Update `prometheus.yml` with your metrics path:
+  ```yaml
+  scrape_configs:
+    - job_name: 'nodejs-app'
+      static_configs:
+        - targets: ['<ec2_ip>:8000']
+      metrics_path: '/metrics'
+  ```
 
 ---
 
-## License
+### Step 9: Grafana and Loki Setup
 
-This project is licensed under the MIT License. Feel free to contribute and share.
+- Run Grafana and Loki containers:
+  ```bash
+  docker run -d -p 3000:3000 --name=grafana grafana/grafana-oss
+  docker run -d -p 3100:3100 --name=loki grafana/loki
+  ```
+
+---
+
+### Step 10: Visualizations
+
+- Access Grafana: `http://<ec2_ip>:3000`
+- Add Prometheus as a data source and create dashboards.
+- Add Loki logs to visualize log data.
+
+---
+
+## Images
+
+Add your screenshots and visualizations here:
+
+- **Project Structure**
+- **Prometheus Configuration**
+- **Grafana Dashboards**
+
+---
+
+## Notes
+
+This setup is intended for **CI/CD and DevOps** use cases only. Ensure your environment variables are securely managed and your infrastructure is properly secured.
+
+---
