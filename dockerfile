@@ -26,6 +26,8 @@ ENV PORT=8000
 ENV DB_URL=${DB_URL}
 ENV CROSS_ORIGIN=${CROSS_ORIGIN}
 ENV JWT_SECRET=${JWT_SECRET}
+ENV LOKI_HOST=${LOKI_HOST}
+
 
 # Command to run your app inside the container (this assumes your built app is in dist/)
 CMD ["node", "dist/index.js"]

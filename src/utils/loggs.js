@@ -5,7 +5,7 @@ console.log(`${process.env.loki_host}`);
 const options = {
   transports: [
     new LokiTransport({
-      host: `${process.env.loki_host}`,
+      host: `${process.env.LOKI_HOST}`,
       labels:"my-server"
     })
   ]
