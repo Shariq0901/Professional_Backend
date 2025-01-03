@@ -25,6 +25,7 @@ const options = {
 
 // Create the logger instance
 const logger = createLogger(options);
+logger.info("server is started")
 
 // Export the logger
 module.exports = logger;
