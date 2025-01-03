@@ -35,5 +35,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/visitor", visitorRouter);
 app.use("/api/v1/admin", adminRouter);
-
+app.get("/", (req, res) => {
+  res.status(200).json({"message":"hello! hey there...."})
+})
 module.exports= { app };
