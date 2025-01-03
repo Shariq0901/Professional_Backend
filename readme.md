@@ -258,16 +258,16 @@ This readme provides only a comprehensive setup for a Node.js server integrated 
   ```
 
 - Update `prometheus.yml` with your metrics path:
-  ```bash
-    nano prometheus.yml
-  ```
-  ```yaml
-  scrape_configs:
-    - job_name: 'nodejs-app'
-      static_configs:
-        - targets: ['<ec2_ip>:8000']
-      metrics_path: '/metrics'
-  ```
+```bash
+nano prometheus.yml
+```
+```yaml
+scrape_configs:
+  - job_name: 'nodejs-app'
+    static_configs:
+      - targets: ['<ec2_ip>:8000']
+    metrics_path: '/metrics'
+```
   `ctrl+o > hit enter > ctrl+x`
 
 ---
@@ -275,7 +275,7 @@ This readme provides only a comprehensive setup for a Node.js server integrated 
 ### Step 9:
 -Run Prometheus server in another screen
 ```bash
-Screen -S prometheus
+screen -S prometheus
 ```
 ```bash
 ./prometheus
@@ -285,8 +285,12 @@ Screen -S prometheus
 ### Step 10: Grafana and Loki Setup
 
 - Run Grafana and Loki containers:
+  1. For Grafana  
   ```bash
   docker run -d -p 3000:3000 --name=grafana grafana/grafana-oss
+  ```
+  2. For Loki
+  ```bash
   docker run -d -p 3100:3100 --name=loki grafana/loki
   ```
 - To get all the current running conatiners.
@@ -302,33 +306,35 @@ Now, in a new tab, navigate to `http://<your_ec2_ip>:9090` to check if Prometheu
 - You should see your URL in **blue color** (this indicates the correct path for metrics).
 
 In a new tab, navigate to `http://<your_ec2_ip>:3000` for Grafana. You will get the authentication page:
+![Dashboard of Grafana](./public/images/Grafana.png)
 - Username: `admin`
 - Password: `admin`
 - You can change the password or skip it.
 
 Navigate to **Data Sources** in **Connections** > **Add New Data Source**.
-- Select **Prometheus**.
-- Add the Prometheus URL (e.g., `http://<your_ec2_ip>:9090/`).
+![Ui of Grafana](./public/images/ui.png)
+- Select **Loki**.
+- Add the Prometheus URL (e.g., `http://<your_ec2_ip>:3100/`).
 - Scroll down and click **Save & Test**.
 
 Navigate to **Dashboard** > **New Dashboard** > **Add Visualization**.
 - Select **Prometheus** as the data source.
 - Choose the metrics and run queries to get the graphs.
 
-Click **Edit** > **Add Visualization** > **Data Source** > **Loki**.
+Click **Edit** > **Add Visualization** > **Data Source** > **Prometheus**.
 - Select the **labels** and **values**.
 
 Now, back to the **Dashboard**.
+
+
 
 ---
 
 ## Images
 
-Add your screenshots and visualizations here:
-
-- **Project Structure**
-- **Prometheus Configuration**
 - **Grafana Dashboards**
+  ![Grafana Dashboard](./public/images/Complete_Dashboard1.png)
+  ![Grafana Dashboard](./public/images/Complete_Dashboard2.png)
 
 ---
 
