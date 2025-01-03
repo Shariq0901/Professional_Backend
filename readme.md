@@ -334,7 +334,7 @@ Now, back to the **Dashboard**.
 
 - **Grafana Dashboards**
   ![Grafana Dashboard](./public/images/Complete_Dashboard1.png)
-  ![Grafana Dashboard](./public/images/Complete_Dashboard2.png)
+  ![Grafana Dashboard](./public/images/Complete_dashboard2.png)
 
 ---
 
