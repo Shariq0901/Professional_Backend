@@ -6,8 +6,10 @@ const Products = require("../models/Products.js");
 const { ApiError } = require("../utils/apiError.js");
 const { ApiResponse } = require("../utils/apiResponse.js");
 const { asyncHandler } = require("../utils/asyncHandler.js");
+const logger=require("../utils/loggs.js")
 require("regenerator-runtime/runtime");
 const addProduct = asyncHandler(async (req, res) => {
+  logger.info("Request came on /api/v1/admin/add-products")
   const { cat_name, subCategories } = req.body;
   let category = await Products.findOne({ cat_name });
   if (category) {
@@ -47,6 +49,7 @@ const addProduct = asyncHandler(async (req, res) => {
   }
 });
 const getProducts = asyncHandler(async (req, res) => {
+  logger.info("Request came on /api/v1/users/Products/products");
     const categories = await Products.find({}, "cat_name subCategories");
     if (!categories) {
       return res.status(404).json(new ApiError(404,"No Products to show"));

@@ -10,6 +10,7 @@ const { asyncHandler } = require("../utils/asyncHandler.js");
 const { ApiError } = require("../utils/apiError.js");
 const { ApiResponse } = require("../utils/apiResponse.js");
 const { validationResult } = require("express-validator");
+const logger = require("../utils/loggs.js");
 require("regenerator-runtime/runtime");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
@@ -18,6 +19,7 @@ const { formatDate } = require("../utils/formateDate.js");
 
 
 const registerUser = asyncHandler(async (req, res) => {
+  logger.info("Request came on /api/v1/user/register")
   const { name, username, phone, email, password, userType } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -45,6 +47,7 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
+  logger.info("Request came on /api/v1/user/login");
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) throw new ApiError(400, "There's no such user exists");
@@ -65,6 +68,7 @@ const loginUser = asyncHandler(async (req, res) => {
   return res.status(200).json({ token: token });
 });
 const logoutUser = asyncHandler(async (req, res) => {
+  logger.info("Request came on /api/v1/user/logout");
   const { email } = req.user;
   const user = await User.findOne({ email });
   if (!user) throw new ApiError(400, "invalid User");
@@ -76,6 +80,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, "logout Successfull"));
 });
 const addUserAddress = asyncHandler(async (req, res) => {
+  logger.info("Request came on /api/v1/user/address");
   const { email } = req.user;
   const { name, phone, pincode, state, city, locality, landmark } = req.body;
    const user = await User.findOne({ email });
