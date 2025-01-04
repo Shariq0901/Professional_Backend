@@ -19,7 +19,7 @@ This readme provides only a comprehensive setup for a Node.js server integrated 
 - Create a Node.js project with all routes and necessary packages
 - Install the addtional dependencies for metrics and log collection:
   ```bash
-  npm install winston winston-loki prom-client express
+  npm install winston winston-loki prom-client 
   ```
 
 ---
