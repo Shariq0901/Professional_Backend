@@ -169,7 +169,7 @@ This readme provides only a comprehensive setup for a Node.js server integrated 
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and tag Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/nodejs-envanto:latest .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/<image_name>:latest .
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/nodejs-envanto:latest
