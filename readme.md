@@ -117,7 +117,7 @@ This readme provides only a comprehensive setup for a Node.js server integrated 
 - Build and run the Docker container:
   ```bash
   docker build -t <image_name> .
-  docker run -p <host_port>:<container_port> nodejs-envanto
+  docker run -p <host_port>:<container_port> <image_name>
   ```
 
 ---
