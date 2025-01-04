@@ -314,7 +314,7 @@ In a new tab, navigate to `http://<your_ec2_ip>:3000` for Grafana. You will get 
 Navigate to **Data Sources** in **Connections** > **Add New Data Source**.
 ![Ui of Grafana](./public/images/ui.png)
 - Select **Loki**.
-- Add the Prometheus URL (e.g., `http://<your_ec2_ip>:3100/`).
+- Add the Loki URL (e.g., `http://<your_ec2_ip>:3100/`).
 - Scroll down and click **Save & Test**.
 
 Navigate to **Dashboard** > **New Dashboard** > **Add Visualization**.
