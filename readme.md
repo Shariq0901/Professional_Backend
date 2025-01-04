@@ -1,4 +1,4 @@
-# Node.js Server Project with CI/CD and DevOps Monitoring Setup
+# Node.js Server Project with CI/CD and Continuous Monitoring Setup
 
 This readme provides only a comprehensive setup for a Node.js server integrated with CI/CD pipelines, logging, and monitoring using Prometheus, Grafana, and Loki. **Note:** This setup is specifically designed for CI/CD and DevOps purposes , see this only after pushing your server in github and add add babel script as build script
 
