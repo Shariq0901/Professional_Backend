@@ -9,7 +9,6 @@ This readme provides only a comprehensive setup for a Node.js server integrated 
 - Node.js (v20 or later)
 - AWS account for EC2 setup
 - GitHub repository with necessary secrets configured
-
 ---
 
 ## Steps
